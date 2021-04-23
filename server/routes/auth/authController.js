@@ -27,8 +27,8 @@ class AuthController {
         user_id, 
         password: hashPassword, 
         roles: [userRole.value],
-        accessToken: '',
-        refreshToken: ''
+        accessToken: 'deleted ' +Date.now(),
+        refreshToken: 'deleted ' +Date.now()
       })
       await user.save()
       const token = await generateAccessToken(secret, true, user_id, user.password, '5m')
@@ -71,8 +71,8 @@ class AuthController {
           { 'user_id': user.user_id },
           { $set: 
               { 
-                'accessToken': '',
-                'refreshToken': '',
+                'accessToken': 'deleted ' + user.accessToken,
+                'refreshToken': 'deleted ' + user.refreshToken,
               } 
           }
         )
@@ -80,12 +80,12 @@ class AuthController {
         if (user.refreshToken) {
           await User.updateOne(
             { 'user_id': user.user_id },
-            { $set:{ 'refreshToken': ''} }
+            { $set:{ 'refreshToken': 'deleted ' + user.refreshToken} }
           )
         } else {
           await User.updateOne(
             { 'user_id': user.user_id },
-            { $set:{ 'accessToken': ''} }
+            { $set:{ 'accessToken': 'deleted ' + user.accessToken} }
           )
         }
       }
