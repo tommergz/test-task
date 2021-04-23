@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const { v4: uuidv4 } = require('uuid');
 require("dotenv").config()
 const { refreshAccessToken } = require('../../tools/accesTokenCreator')
+const request = require('request')
 
 const secret = process.env.secret
 
